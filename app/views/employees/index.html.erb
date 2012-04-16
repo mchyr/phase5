@@ -1,0 +1,13 @@
+<div class="row">
+	<div class="span8">
+		<h2>Current Employees</h2>
+		<%= render :partial => "current_employees" unless @employees.empty? %>
+	</div>
+	<div class="span4">
+		<h2>Former Employees</h2>
+		<%= render :partial => "inactive_employees" unless @inactive_employees.empty? %>
+		
+	</div>
+</div>
+
+<%= link_to raw("<i class='icon-plus icon-white'></i> Add a New Employee"), new_employee_path, :class => 'btn btn-primary', :id => 'Create Employee' %>

@@ -1,0 +1,5 @@
+This is a set of models and unit tests that can be used to build the final phase of the Creamery project in 67-272 (Spring 2012).  It also has some controllers and views to handle CRUD operations for the first three models: Store, Employee and Assignment.  This version does NOT use the twitter-bootstrap-rails gem, but DOES include static version of twitter bootstrap css and js to do some basic formatting of the views.
+
+This project also contains a populate script that will create 3 stores in the Pittsburgh area, 2 administrators (Alex and Mark), 6 managers (2 for each store) and 100 employees who have one or more assignments.  This should give you enough sample data for you to see how your application performs.  To generate this data, you can run 'rake db:populate' after you have created a database by running all the migrations.
+
+We will be adding some additional files with cucumber testing features prior to turn-in, but these are not necessary for you to complete your work.

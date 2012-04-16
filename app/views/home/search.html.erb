@@ -1,0 +1,22 @@
+<h2>Search result for term <em>'<%= @query %>'</em> resulted in <%= pluralize(@total_hits, 'hit') %></h2>
+<p class="supertiny">&nbsp;</p>
+
+<% unless @employees.empty? %>
+	<p><em><strong>Employees matching term '<%= @query %>'</strong></em></p>
+	<ul>
+		<% for employee in @employees do %>
+			<li><%= link_to employee.name, employee_path(employee) %></li>
+		<% end %>
+	</ul>
+	<p class="smtext">&nbsp;</p>
+<% end %>
+
+<% unless @stores.empty? %>
+	<p><em><strong>Stores matching term '<%= @query %>'</strong></em></p>
+	<ul>
+		<% for store in @stores do %>
+			<li><%= link_to store.name, store_path(store) %></li>
+		<% end %>
+	</ul>
+	<p class="supertiny">&nbsp;</p>
+<% end %>

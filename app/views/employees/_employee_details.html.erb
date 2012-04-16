@@ -1,0 +1,25 @@
+<p>
+	<h4>
+	  Name: <%= @employee.name %>
+	</h4>
+</p>
+
+<p>
+  <b>SSN:</b> <%= @employee.ssn %>
+</p>
+
+<p>
+  <b>Date of Birth:</b> <%= @employee.date_of_birth.strftime("%m/%d/%y") %>
+</p>
+
+<p>
+  <b>Phone:</b> <%= number_to_phone @employee.phone unless @employee.phone.nil? %>
+</p>
+
+<p>
+  <b>Role:</b> <%= @employee.role.capitalize %>
+</p>
+
+<p>
+  <b>Active:</b> <%= @employee.active ? "Yes" : "No" %>
+</p>

@@ -1,0 +1,25 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+			<th>Employee</th>
+			<th>Store</th>
+			<th class="centered">Pay</th>
+      <th>Dates</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @past_assignments.each do |assignment| %>
+      <tr>
+				<td><%= link_to assignment.employee.name, employee_path(assignment.employee) %></td>
+				<td><%= link_to assignment.store.name, store_path(assignment.store) %></td>
+				<td class="centered"><%= assignment.pay_level %></td>
+        <td><%= assignment.start_date.strftime("%m/%d/%y") %> - <%= assignment.end_date.strftime("%m/%d/%y") %></td>
+        <td>
+					<%= link_to raw("Details"), assignment_path(assignment), :class => 'btn btn-mini' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= will_paginate @past_assignments, :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>

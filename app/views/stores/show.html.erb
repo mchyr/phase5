@@ -1,0 +1,19 @@
+<div class="row">
+	<div class="span8">
+		<h3>Store Details</h3>
+		<%= render :partial => "store_details" %>
+	</div>
+	<div class="span4">
+		<h3>Current Employees</h3>
+		<%= render :partial => "assigned_employees" unless @current_assignments.empty? %>
+		<br />
+		<%= link_to raw("<i class='icon-plus icon-white'></i> Assign Employee"), new_assignment_path(:id => @store.id, :from => 'store'), :class => 'btn btn-primary' %>
+	</div>
+</div>
+
+
+<div class="form-actions">
+  <%= link_to raw("<i class='icon-th-list'></i> Display All Stores"), stores_path, :class => 'btn'  %>&nbsp;&nbsp;
+  <%= link_to raw("<i class='icon-pencil'></i> Edit #{@store.name}"), edit_store_path(@store), :class => 'btn' %>&nbsp;&nbsp;
+  <%= link_to raw("<i class='icon-trash icon-white'></i> Delete #{@store.name}"), store_path(@store), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+</div>

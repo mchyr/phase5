@@ -1,0 +1,23 @@
+<h2>Inactive Stores</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Store Name</th>
+			<th>Address</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @inactive_stores.each do |store| %>
+      <tr>
+        <td><%= link_to store.name, store_path(store) %></td>
+				<td><%= store.street %>, <%= store.city %></td>
+        <td>
+					<%= link_to raw("<i class='icon-file'></i> Details"), store_path(store), :class => 'btn btn-mini' %>
+          <%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_store_path(store), :class => 'btn btn-mini' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= will_paginate @inactive_stores, :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
