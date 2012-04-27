@@ -44,6 +44,8 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem 'ffi', '1.0.9'
+
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
 
