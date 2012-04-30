@@ -25,6 +25,11 @@ class Assignment < ActiveRecord::Base
   scope :for_pay_level, lambda {|pay_level| where("pay_level = ?", pay_level) }
   scope :for_role, lambda {|role| joins(:employee).where("role = ?", role) }
 
+  #returns formatted name of assignment
+  def name
+    "#{Employee.find(self.employee_id).name} at #{Store.find(self.store_id).name}"
+  end
+
   # Private methods for callbacks and custom validations
   private  
   

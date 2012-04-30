@@ -2,6 +2,7 @@ class Employee < ActiveRecord::Base
   # Callbacks
   before_save :reformat_phone
   before_validation :reformat_ssn
+  before_destroy :make_inactive
   
   # Relationships
   has_many :assignments
@@ -26,7 +27,7 @@ class Employee < ActiveRecord::Base
   scope :managers, where('role = ?', 'manager')
   scope :admins, where('role = ?', 'admin')
   scope :alphabetical, order('last_name, first_name')
-  
+  scope :search, lambda{|term| where('first_name LIKE ? OR last_name LIKE ?', "#{term}%", "#{term}%")}
   # Other methods
   def name
     "#{last_name}, #{first_name}"
@@ -51,6 +52,14 @@ class Employee < ActiveRecord::Base
   def age
     (Time.now.to_s(:number).to_i - date_of_birth.to_time.to_s(:number).to_i)/10e9.to_i
   end
+
+  def worked_hours_over_past_few_days(num=14)
+    minutes = 0
+    self.shifts.for_past_days(num).each do |shift|
+      minutes += shift.time_worked_in_minutes
+    end
+    minutes/60
+  end
   
   # Misc Constants
   ROLES_LIST = [['Employee', 'employee'],['Manager', 'manager'],['Administrator', 'admin']]
@@ -69,4 +78,8 @@ class Employee < ActiveRecord::Base
      ssn.gsub!(/[^0-9]/,"")   # strip all non-digits
      self.ssn = ssn           # reset self.ssn to new string
    end
+
+   def make_inactive
+    update_attribute(:active, false) and return false
+  end
 end

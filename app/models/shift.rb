@@ -1,4 +1,5 @@
 class Shift < ActiveRecord::Base
+  before_save :update_end_time
   # Relationships
   has_many :shift_jobs
   has_many :jobs, :through => :shift_jobs
@@ -30,6 +31,13 @@ class Shift < ActiveRecord::Base
   scope :chronological, order(:date, :start_time)
   scope :by_store, joins(:assignment, :store).order(:name)
   scope :by_employee, joins(:assignment, :employee).order(:last_name, :first_name)
+
+  validates_date :date
+  validates_time :start_time
+  validates_time :end_time, :on => :create, :allow_nil => true, :allow_blank => true
+  validates time :end_time, :on => :update, :after => :start_time, :after_message => "must be after start time"
+  validate :valid_and_current_assignment_id
+  validate :end_time_is_not_in_future, :on => :update
   
   # a class method to also find incomplete shifts using array operations...
   # def self.not_completed
