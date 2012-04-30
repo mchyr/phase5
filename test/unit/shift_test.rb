@@ -240,6 +240,22 @@ class ShiftTest < ActiveSupport::TestCase
     should "have a scope to order by employee name" do
       assert_equal ['Crawford, Cindy','Gruberman, Ed','Janeway, Kathryn','Wilson, Ralph','Wilson, Ralph','Wilson, Ralph','Wilson, Ralph'], Shift.by_employee.map{|s| s.employee.name}
     end
+
+    # should "create map link" do
+    #   @cmu.create_map_link
+    #   @cmu.create_map_of_all_stores_link
+    #   unworked_hours_cmu = @cmu.get_unworked_hours_for_week
+    #   assert !unworked_hours_cmu.flatten.include?(1)
+    #   unworked_hours_oakland = @oakland.get_unworked_hours_for_week
+    #   assert_equal unworked_hours_oakland.flatten.delete(0).size, 4
+    # end
+
+    # should "return correct store latitude and longitude in array" do
+    #   coord = Array.new
+    #   coord << @cmu.latitude
+    #   coord << @cmu.longitude
+    #   assert_equal coord, @cmu.to_coordinates
+    # end
     
   end
 end

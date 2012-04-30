@@ -2,17 +2,14 @@ class JobsController < ApplicationController
 	before_filter :check_login
 	authorize_resource
 
-	def index
-		@jobs = Job.active.paginate(:page => params[:page]).per_page(10)
-		respond_to do |format|
-			format.html # @index.html.erb
-			format.json {render json: @jobs}
-		end
-	end
+  def index
+    @jobs = Job.all
 
-	def index_inactive
-		@inactive_jobs = Job.inactive.paginate(:page => params[:page]).per_page(10)
-	end
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @jobs }
+    end
+  end
 
 	def show
 		@job = Job.find(paragms[:id])

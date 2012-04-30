@@ -1,0 +1,10 @@
+Run options: 
+
+# Running tests:
+
+.................................................................................................................................................................................
+
+Finished tests in 210.390625s, 0.8413 tests/s, 1.1217 assertions/s.
+
+177 tests, 236 assertions, 0 failures, 0 errors, 0 skips
+Coverage report generated for Unit Tests to c:/Documents and Settings/Michelle/My Documents/67272 IS/Phase5/creamery_phase_5_nb/coverage. 286 / 614 LOC (46.58%) covered.

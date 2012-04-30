@@ -48,22 +48,26 @@ class AssignmentTest < ActiveSupport::TestCase
 
      # and provide a teardown method as well
      teardown do
-       @cmu.destroy
-       @oakland.destroy
-       @hazelwood.destroy
-       @ed.destroy
-       @cindy.destroy
-       @ralph.destroy
-       @ben.destroy
-       @kathryn.destroy
-       @alex.destroy
-       @assign_ed.destroy
-       @assign_cindy.destroy
-       @assign_ben.destroy
-       @promote_ben.destroy
-       @assign_kathryn.destroy
+       # @cmu.destroy
+       # @oakland.destroy
+       # @hazelwood.destroy
+       # @ed.destroy
+       # @cindy.destroy
+       # @ralph.destroy
+       # @ben.destroy
+       # @kathryn.destroy
+       # @alex.destroy
+       # @assign_ed.destroy
+       # @assign_cindy.destroy
+       # @assign_ben.destroy
+       # @promote_ben.destroy
+       # @assign_kathryn.destroy
      end
      
+     should "have correct name" do
+      assert_equal "Janeway, Kathryn at Oakland", @assign_kathryn.name
+    end
+    
      should "have a scope 'for_store' that works" do
        assert_equal 4, Assignment.for_store(@cmu.id).size
        assert_equal 1, Assignment.for_store(@oakland.id).size

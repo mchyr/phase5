@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   	redirect_to login_url, alert: "You need to log in to view this page." if current.user.nil?
   end
 
-  def has_incompelte_shifts?
+  def has_incomplete_shifts?
   	if current_user.nil? || current_user.employee.current_assignment.nil?
   		return false
   	end
