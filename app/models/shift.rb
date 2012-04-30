@@ -35,7 +35,7 @@ class Shift < ActiveRecord::Base
   validates_date :date
   validates_time :start_time
   validates_time :end_time, :on => :create, :allow_nil => true, :allow_blank => true
-  validates time :end_time, :on => :update, :after => :start_time, :after_message => "must be after start time"
+  validates_time :end_time, :on => :update, :after => :start_time, :after_message => "must be after start time"
   validate :valid_and_current_assignment_id
   validate :end_time_is_not_in_future, :on => :update
   

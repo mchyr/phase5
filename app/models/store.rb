@@ -105,7 +105,7 @@ class Store < ActiveRecord::Base
   def find_store_coordinates
     coord = Geokit::Geocoders::GoogleGeocoder.geocode "#{street} #{city}, #{state} #{zip}"
     if coord.success
-      self.latitude, self.longitude = coord.11.split(',')
+      self.latitude, self.longitude = coord.ll.split(',')
     else
       errors.add_to_base("Error with geocoding")
     end
