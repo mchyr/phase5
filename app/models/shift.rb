@@ -6,6 +6,8 @@ class Shift < ActiveRecord::Base
   has_one :store, :through => :assignment
   has_one :employee, :through => :assignment
   
+  accepts_nested_attributes_for :shift_jobs, :reject_if => lambda {|shift_job| shift_job[:job_id] == "0"}
+
   # Validations
   validates_date :date, :on_or_after => lambda { :assignment_starts }, :on_or_after_message => "must be on or after the start of the assignment"
   # validates_date :date, :on_or_after => lambda { self.assignment.start_date.to_date }, :on_or_after_message => "must be on or after the start of the assignment"
@@ -42,6 +44,10 @@ class Shift < ActiveRecord::Base
   def completed?
     # ShiftJob.find_all_by_shift_id(self.id).size > 0
     self.shift_jobs.count > 0
+  end
+  
+  def name
+    "#{start_time.localtime.strftime("%l:%M %p")} - #{end_time.localtime.strftime("%l:%M %p")} at #{self.assignment.store.name}"
   end
   
   # callback to set default end_time (on create only)

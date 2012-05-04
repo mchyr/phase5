@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
-  #attr_accessible :email, :password, :password_confirmation, :employee_id
-  #attr_accessor :password
-  #before_save :prepare_password
+  attr_accessible :email, :password, :password_confirmation, :employee_id
+  has_secure_password
+  before_create {generate_token(:auth_token)}
 
   # Relationship
   belongs_to :employee
@@ -15,39 +15,39 @@ class User < ActiveRecord::Base
   #validates_confirmation_of :password
   #validates_length_of :password, :minimum => 4, :allow_blank => true
 
-  # #def proper_name
-  #   Employee.find(self.employee_id).proper_name
-  # end
+  def proper_name
+    Employee.find(self.employee_id).proper_name
+  end
 
-  # def role
-  #   if self.employee_id.blank?
-  #     return 'guest'
-  #   end
-  #   Employee.find(self.employee_id).role
-  # end
+  def role
+    if self.employee_id.blank?
+      return 'guest'
+    end
+    Employee.find(self.employee_id).role
+  end
 
-  # def role? (authorized_role)
-  #   return false if self.role.nil?
-  #   self.role == authorized_role
-  # end
+  def role? (authorized_role)
+    return false if self.role.nil?
+    self.role == authorized_role
+  end
 
-  # def send_password_reset
-  #   generate_token(:password_reset_token)
-  #   self.password_reset_sent_at = Time.now
-  #   save!
-  #   UserMailer.password_reset(self).deliver
-  # end
+  def send_password_reset
+    generate_token(:password_reset_token)
+    self.password_reset_sent_at = Time.zone.now
+    save!
+    UserMailer.password_reset(self).deliver
+  end
 
-  # def generate_token(column)
-  #   begin
-  #     self[column] = SecureRandom.urlsafe_base64
-  #   end while User.exists?(column => self[column])
-  # end
+  def generate_token(column)
+    begin
+      self[column] = SecureRandom.urlsafe_base64
+    end while User.exists?(column => self[column])
+  end
 
-  # def self.authenticate(login, pass)
-  #   user = find_by_email(login)
-  #   return user if user && user.password_hash == user.encrypt_password(pass)
-  # end
+  def self.authenticate(login, pass)
+    user = find_by_email(login)
+    return user if user && user.password_hash == user.encrypt_password(pass)
+  end
 
   # def encrypt_password(pass)
   #   BCrypt::Engine.hash_secret(pass, password_salt)

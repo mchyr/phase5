@@ -1,5 +1,7 @@
 Creamery2012::Application.routes.draw do
   
+  get "password_resets/new"
+
   # Generated model routes
   resources :stores
   resources :employees

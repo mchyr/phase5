@@ -27,11 +27,11 @@ class UserTest < ActiveSupport::TestCase
     end
 
     # and provide a teardown method as well
-    teardown do
-      @ed.destroy
-      @ralph.destroy
-      @kathryn.destroy
-    end
+    # teardown do
+    #   @ed.destroy
+    #   @ralph.destroy
+    #   @kathryn.destroy
+    # end
 
     should "allow active employees to be users" do
       active_employee = FactoryGirl.build(:user, :employee => @kathryn, :email => "kathryn@example.com")

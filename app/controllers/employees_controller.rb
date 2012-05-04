@@ -9,8 +9,9 @@ class EmployeesController < ApplicationController
 
   def show
     @employee = Employee.find(params[:id])
+    @current_assignment = @employee.current_assignment
     # get the assignment history for this employee
-    @assignments = @employee.assignments.chronological.paginate(:page => params[:page]).per_page(5)
+    @assignments = @employee.assignments.chronological.paginate(:page => params[:page]).per_page(10)
     # get upcoming shifts for this employee (later)
     
   end
@@ -48,7 +49,7 @@ class EmployeesController < ApplicationController
   def destroy
     @employee = Employee.find(params[:id])
     @employee.destroy
-    flash[:notice] = "Successfully removed #{@employee.proper_name} from the AMC system."
+    flash[:notice] = "Successfully removed #{@employee.proper_name} from the Creamery system."
     redirect_to employees_url
   end
 end

@@ -1,30 +1,17 @@
 class JobsController < ApplicationController
-	before_filter :check_login
-	authorize_resource
+	before_filter :check_login, :except => [:show, :index, :new, :edit, :create, :update, :delete]
 
-  def index
-    @jobs = Job.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @jobs }
-    end
-  end
+  	def index
+    	@jobs = Job.active.paginate(:page => params[:page]).per_page(10)
+    	@inactive_jobs = Job.inactive.paginate(:page => params[:page]).per_page(10)
+  	end
 
 	def show
-		@job = Job.find(paragms[:id])
-		respond_to do |format|
-			format.html # @show.html.erb
-			format.json {render json: @job}
-		end
+		@job = Job.find(paams[:id])
 	end
 
 	def new
 		@job = Job.new
-		respond_to do |format|
-			format.html # @new.html.erb
-			format.json {render json: @job}
-		end
 	end
 
 	def edit
@@ -62,9 +49,10 @@ class JobsController < ApplicationController
 		@job.destroy
 
 		respond_to do |format|
-			format.html {redirect_to jobs_url}
+			format.html {redirect_to jobs_url, notice: 'Job was successfully deleted.'}
 			format.json {head :no_content}
 		end
 	end
+	
 end
 

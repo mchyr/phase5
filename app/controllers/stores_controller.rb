@@ -4,14 +4,12 @@ class StoresController < ApplicationController
 
   def index
     @stores = Store.active.alphabetical.paginate(:page => params[:page]).per_page(10)
-    @inactive_stores = Store.inactive.alphabetical.paginate(:page => params[:page]).per_page(10)
-    authorize! :view, @stores
-    authorize! :view, @inactive_stores
+    @inactive_stores = Store.inactive.alphabetical.paginate(:page => params[:inactive_page]).per_page(10)
   end
 
   def show
-    @store = Store.find(params[:id])
-    authorize! :read, @store
+    @store = Store.alphabetical.find(params[:id])
+    @employees = @store.assignments.current.paginate(:page => params[:page]).per_page(10)
     # get all the current assignments for this store
     @current_assignments = @store.assignments.current.by_employee.paginate(:page => params[:page]).per_page(8)
   end
@@ -49,7 +47,7 @@ class StoresController < ApplicationController
   def destroy
     @store = Store.find(params[:id])
     @store.destroy
-    flash[:notice] = "Successfully removed #{@store.name} from the AMC system."
+    flash[:notice] = "Successfully removed #{@store.name} from the Creamery system."
     redirect_to stores_url
   end
 end

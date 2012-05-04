@@ -26,6 +26,7 @@ class Store < ActiveRecord::Base
   scope :alphabetical, order('name')
   scope :active, where('active = ?', true)
   scope :inactive, where('active = ?', false)
+  scope :search, lambda {|term| where('name LIKE ?', "#{term}%")}
   
   
   # Misc Constants
@@ -33,33 +34,42 @@ class Store < ActiveRecord::Base
 
   def create_map_link(zoom=13, width=800, height=800)
     markers = ""; i = 1
-    self.attractions.all.each do |attr|
-      markers += "&markers=color:red%7Ccolor:red%7Clabel:#{i}%7C#{attr.latitude},#{attr.longitude}"
+      markers += "&markers=color:red%7Ccolor:red%7Clabel:#{i}%7C#{self.latitude},#{self.longitude}"
       i += 1
-    end
     map = "http://maps.google.com/maps/api/staticmap?center=#{latitude},#{longitude}&zoom=#{zoom}&size=#{width}x#{height}&maptype=roadmap#{markers}&sensor=false"
   end
 
-  def self.create_map_of_all_stores_link(zoom=13, width=800, height=800)
+  def self.create_map_all_link(zoom=10, width=400, height=400)
     markers = ""; i = 1
-    store_coords = Array.new
-    Store.active.alphabetical.each do |store|
+    all_lat_coords = 0
+    all_long_coords = 0
+    Store.active.all.each do |store|
       markers += "&markers=color:red%7Ccolor:red%7Clabel:#{i}%7C#{store.latitude},#{store.longitude}"
       i+=1
-      store_coords << store.to_coordinates
+      all_lat_coords += store.latitude
+      all_long_coords += store.longitude
+      puts store.latitude
+      puts store.longitude
     end
-    center = store_coords.transpose.map{|c| c.inject{|a, b| a + b}.to_f / c.size}
+    avg_lat = all_lat_coords / (Store.active.all.size)
+    avg_long = all_long_coords / (Store.active.all.size)
+
+    puts avg_lat
+    puts avg_long
+ 
     map = "htp://maps.google.com/maps/api/staticmap?center=#{center},#{center}&zoom=#{zoom}&size=#{width}x#{height}&maptype=roadmap#{markers}&sensor=false"
   end
 
-  def to_coordinates
-    coord = Array.new
-    coord << self.latitude
-    coord << self.longitude
-    coord
+  def find_store_coordinates
+    coord = Geokit::Geocoders::GoogleGeocoder.geocode "#{street} #{city}, #{state} #{zip}"
+    if coord.success
+      self.latitude, self.longitude = coord.ll.split(',')
+    else
+      errors.add_to_base("Error with geocoding")
+    end
   end
 
-  def get_shift_hours_for_past_days(num=14)
+  def shift_hours_for_past_days(num=14)
     sum=0
     self.shifts.for_past_days(num).each do |shift|
       sum += shift.time_worked_in_minutes
@@ -67,27 +77,27 @@ class Store < ActiveRecord::Base
     return sum/60
   end
 
-  def get_unworked_hours_for_week
-    unworked_week = Array.new (8) {Array.new (24)}
-    uncoming_shifts = Shift.for_store(self.id).for_next_days(7)
-    for i in 0..7
-      for j in 0..23
-        unworked_week[i][j] = 0
-      end
-    end
+  # def get_unworked_hours_for_week
+  #   unworked_week = Array.new (8) {Array.new (24)}
+  #   uncoming_shifts = Shift.for_store(self.id).for_next_days(7)
+  #   for i in 0..7
+  #     for j in 0..23
+  #       unworked_week[i][j] = 0
+  #     end
+  #   end
 
-    (0..7).each do |i|
-      upcoming_shifts.each do |shift|
-        curr_day = i.days.from_now.to_date
-        if curr_day.month == shift.date.month && curr_day.day == shift.date.day
-          for j in shift.start_time.localtime.hour..shift.end_time.localtime.hour
-            unworked_week[i][j] = 1
-          end
-        end
-      end
-    end
-    unworked_week
-  end
+  #   (0..7).each do |i|
+  #     upcoming_shifts.each do |shift|
+  #       curr_day = i.days.from_now.to_date
+  #       if curr_day.month == shift.date.month && curr_day.day == shift.date.day
+  #         for j in shift.start_time.localtime.hour..shift.end_time.localtime.hour
+  #           unworked_week[i][j] = 1
+  #         end
+  #       end
+  #     end
+  #   end
+  #   unworked_week
+  # end
   
   
   # Callback code
@@ -103,13 +113,5 @@ class Store < ActiveRecord::Base
   def make_inactive
     update_attribute(:active, false) and return false
   end
-
-  def find_store_coordinates
-    coord = Geokit::Geocoders::GoogleGeocoder.geocode "#{street} #{city}, #{state} #{zip}"
-    if coord.success
-      self.latitude, self.longitude = coord.ll.split(',')
-    else
-      errors.add_to_base("Error with geocoding")
-    end
-  end
+  
 end

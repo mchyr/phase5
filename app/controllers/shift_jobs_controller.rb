@@ -1,39 +1,26 @@
 class ShiftJobsController < ApplicationController
 
   before_filter :check_login
-  authorize_resource
   
   # GET /shift_jobs
   # GET /shift_jobs.json
   def index
     @shift_jobs = ShiftJob.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @shift_jobs }
-    end
   end
 
   # GET /shift_jobs/1
   # GET /shift_jobs/1.json
   def show
     @shift_job = ShiftJob.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @shift_job }
-    end
+    @job = @shift_job.job.paginate(:page => params[:page]).per_page(10)
+    @shift = @shift_job.shift.paginate(:page => params[:page]).per_page(10)
+    @assignment = @shift_job.shift.assignment.paginate(:page => params[:page]).per_page(10)
   end
 
   # GET /shift_jobs/new
   # GET /shift_jobs/new.json
   def new
     @shift_job = ShiftJob.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @shift_job }
-    end
   end
 
   # GET /shift_jobs/1/edit
