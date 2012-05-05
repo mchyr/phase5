@@ -1,0 +1,35 @@
+<div id="container">
+	<br>
+	<h1>Current Users</h1>
+
+<table>
+  <thead>
+    <th>Employee</th>
+    <th>Email</th>
+    <th>Role</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </thead>
+
+<% @users.each do |user| %>
+  <tr>
+    <td><%= link_to user.employee.proper_name, employee_path(user.employee) %></td>
+    <td><%= user.email %></td>
+    <td><%= user.employee.role.capitalize %></td>
+    <td><%= link_to 'Details', user, :class => 'btn' %></td>
+    <td><%= link_to 'Edit', edit_user_path(user), :class => 'btn' %></td>
+    <td><%= link_to 'Destroy', user, confirm: 'Are you sure?', method: :delete, :class => 'btn danger' %></td>
+  </tr>
+<% end %>
+</table>
+
+<div id="page_nav">
+  <%= will_paginate @users, :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+</div>
+
+<br /><br/>
+
+<%= link_to 'New User', new_user_path, :class => 'btn primary' %>
+
+</div>

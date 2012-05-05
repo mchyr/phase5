@@ -1,13 +1,64 @@
-<div class="row">
-	<div class="span6">
-		<h2>Current Assignments</h2>
-		<%= render :partial => "current_assignments" unless @assignments.empty? %>
-	</div>
-	<div class="span6">
-		<h2>Past Assignments</h2>
-		<%= render :partial => "past_assignments" unless @past_assignments.empty? %>
-		
-	</div>
-</div>
+<div id="container">
+  <br>
+  <h1>Current Assignments</h1>
 
-<%= link_to raw("<i class='icon-plus icon-white'></i> Add a New Assignment"), new_assignment_path, :class => 'btn btn-primary' %>
+<table class="datagrid">
+  <tr>
+    <th>Store</th>
+    <th>Employee</th>
+    <th>Pay</th>
+    <th>Start Date</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+  </tr>
+
+<% @assignment.each do |assignment| %>
+  <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
+    <td><%= link_to assignment.store.name, store_path(assignment.store) %></td>
+    <td><%= link_to assignment.employee.name, employee_path(assignment.employee) %></td>
+    <td><%= assignment.pay_level %></td>
+    <td><%= assignment.start_date.strftime("%m/%d/%y") %></td>
+    <td><%= link_to 'Details', assignment_path(assignment), :class => 'btn' %></td>
+    <td><%= link_to 'Edit', edit_assignment_path(assignment), :class => 'btn' %></td>
+    
+
+  </tr>
+<% end %>
+</table>
+
+<br/>
+<span class="smtext">
+  <%= will_paginate @assignment, :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+</span>
+<%= link_to 'New Assignment', new_assignment_path, :class => 'btn' %>
+
+<h1>Past Assignments</h1>
+
+<table class="datagrid">
+  <tr>
+    <th>Store</th>
+    <th>Employee Name</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+  </tr>
+
+<% @past_assignments.each do |assignment| %>
+  <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
+    <td><%= link_to assignment.store.name, store_path(assignment.store) unless assignment.store.nil? %></td>
+    <td><%= link_to assignment.employee.name, employee_path(assignment.employee) unless assignment.employee.nil? %></td>
+    <td><%= link_to 'Details', assignment_path(assignment), :class => 'btn' %></td>
+    <td><%= link_to 'Edit', edit_assignment_path(assignment), :class => 'btn' %></td>
+
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<!-- Add the pagination using will_paginate gem -->
+
+<span class="smtext">
+  <%= will_paginate @past_assignments, :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next", :param_name => "past_page" %>
+</span>
+
+</div>

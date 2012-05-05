@@ -1,0 +1,32 @@
+<div id="container">
+	<br>
+	<p id="notice"><%= notice %></p>
+	<p class="supertiny"></p>
+
+<table>
+
+<thead>
+  <th>Job Details</th>
+</thead>
+
+<tr>
+  <td><b>Name:</b>
+  <%= @job.name %></td>
+<tr>
+
+<tr>
+  <td><b>Description:</b>
+  <%= @job.description %></td>
+<tr>
+
+<tr>
+  <td><b>Active:</b>
+  <%= "#{(@job.active)? "Yes" : "No"}" %></td>
+<tr>
+
+</table>
+
+<%= link_to 'Edit', edit_job_path(@job), :class => "btn" %>
+<%= link_to 'Back', jobs_path, :class => "btn"  %>
+
+</div>

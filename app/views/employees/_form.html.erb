@@ -1,18 +1,55 @@
-<%= simple_form_for @employee, :html => { :class => 'form-horizontal' } do |f| %>
-  <fieldset>
-    <legend><%= controller.action_name.capitalize %> Employee</legend>
-		
-		<%= f.input :first_name %>
-		<%= f.input :last_name %>
-		<%= f.input :ssn, :label => "SSN" %>
-		<%= f.input :date_of_birth, :label => "Date of Birth", :as => :date, :start_year => Date.today.year - 13, :end_year => Date.today.year - 75, :order => [:month, :day, :year], :include_blank => true %>
-		<%= f.input :phone %>
-		<%= f.input :role, :collection => Employee::ROLES_LIST %>
-		<%= f.input :active %>
+<%= simple_form_for(@employee) do |f| %>
+  <% if @employee.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
 
-    <div class="form-actions">
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to 'Cancel', employees_path, :class => 'btn' %>
+      <ul>
+      <% @employee.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
     </div>
-  </fieldset>
+  <% end %>
+
+<div class="field">
+  <%= f.label :first_name %>
+  <%= f.text_field :first_name %>
+</div>
+
+<div class="field">
+  <%= f.label :last_name %>
+  <%= f.text_field :last_name %>
+</div>
+
+<div class="field">
+  <%= f.label :ssn %>
+  <%= f.text_field :ssn %>
+</div>
+
+<div class="field">
+  <%= f.label :date_of_birth %><br />
+  <%= f.date_select :date_of_birth, :as => :date, :start_year => Date.today.year-90, :end_year => Date.today.year - 13, :order => [:month, :day, :year] %>
+</div>
+
+<div class="field"><br />
+  <%= f.label :phone %>
+  <%= f.text_field :phone %>
+</div>
+
+<div class="field"><br />
+  <%= f.label :role %>
+  <%= f.select(:role, Employee::ROLES_LIST, :prompt => "Select...") %>
+</div>
+
+
+<div class="field">
+  <%= f.label :active %><br />
+  <%= f.check_box :active %>
+</div>
+
+<div class="actions"><br />
+  <%= f.submit :class => "btn" %>
+  <%= link_to 'Back', employees_path, :class => "btn" %>
+</div>
+
 <% end %>

@@ -1,0 +1,43 @@
+<div id="static">
+<table>
+	<thead>
+    <th>Employees at <%= link_to @employee.current_assignment.store.name, store_path(@employee.current_assignment.store) %></th>
+  </thead>
+
+  <thead>
+    <th>Name</th>
+    <th>Shift Hours</th>
+    <th>Last Shift Date</th>
+    <th></th>
+    <th></th>
+  </thead>
+  <% @employee_present = Array.new %>
+  <% @assignments.sort{|x, y| x.employee.name <=> y.employee.name}.each do |assignment| %>
+  <% if assignment.employee.name != @employee.name && !@employee_present.include?(assignment.employee)%>
+    <tr>
+      <td><%= link_to assignment.employee.name, employee_path(assignment.employee) %></td>
+      <td><%= assignment.employee.worked_hours_over_past_few_days %></td>
+      <td>
+        <% if assignment.employee.shifts.size > 0 && assignment.employee.shifts.past.size > 0 %> 
+            <%= assignment.employee.shifts.past.first.date.strftime("%m/%d/%y") %>
+        <% else %>
+          N/A
+        <% end %>
+
+      </td>
+      <td><%= link_to 'New Shift', new_shift_path(:assignment_id => assignment.id), :class => 'btn primary' %></td>
+      <td><%= link_to 'Edit Employee', edit_employee_path(assignment.employee), :class => 'btn primary' %></td>
+      <td><%= link_to 'Details', employee_path(assignment.employee), :class => 'btn' %></td>
+      <% @employee_present << assignment.employee %>
+    </tr>
+  <% end %>
+<% end %>
+</table>
+
+<div id="page_nav">
+  <%= will_paginate @assignments, :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+</div>
+<br />
+<br />
+
+</div>

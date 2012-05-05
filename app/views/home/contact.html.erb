@@ -1,38 +1,44 @@
-<h2>Contact the Creamery</h2>
-<div class="row">
-	<div class="span8">
-		<p>Unfortunately, the Amazing &amp; Marvelous Creamery is not a real business, but 
-			rather a course project for programming students at Carnegie Mellon University. We 
-			are sure that you wanted to taste our delicious ice cream and even get a job working  
-			for the best company on the planet, but that's how it goes sometimes.  If you are 
-			bitterly disappointed (and quite honestly, you should be) and want to 
-			grouse to someone, here's the contact info:</p>
+<div id="container">
+	<br>
 
-		<table cellpadding="3">
-			<tr>
-				<td>Webmaster:&nbsp;&nbsp;&nbsp;</td>
-				<td>Professor Larry Heimann</td>
-			</tr>
-			<tr>
-				<td>Email:</td>
-				<td>
-				<%= mail_to("profh@cmu.edu", "Klingon Code Warrior*", :encode => "javascript") %> 
-				</td>
-			</tr>
-			<tr>
-				<td>Phone:</td>
-				<td>412-268-8211</td>
-			</tr>
-		</table>
+<h1>Contact Us</h1>
 
-		<p class="note"><br>*I am a professor of information systems at Carnegie Mellon 
-			University and this nickname was a little running joke between myself and my 
-			students that I adopted as my signature for all my programming work.  
-			<br><br><em>... in truth I am only half-Klingon.</em></p>
-	</div>
-	<div class="span4">
-		picture here
-	</div>
+<div id="pic">
+	<%= image_tag 'desserts.jpg', :class => "left" %>
 </div>
 
+<div id="main">
+<p>	Unfortunately, the Creamery
+ is not a real dessert website, but rather a sample project for noob students
+ like me at Carnegie Mellon University. We are sure that you wanted to try exceptional
+ desserts and ice cream flavors from the most exquisite creamery on the planet, but
+ that's how it goes sometimes.  If you are bitterly disappointed (and quite honestly,
+ you should be) and want to grouse to someone, here's the contact info:</p>
 
+<table cellpadding="3">
+	<tr>
+		<td>Webmaster:&nbsp;&nbsp;&nbsp;</td>
+		<td> M. Chyr</td>
+	</tr>
+	<tr>
+		<td>Email:</td>
+		<td>
+		<%= mail_to("mchyr@cmu.edu", "My email", :encode => "javascript") %> 
+		</td>
+	</tr>
+	<tr>
+		<td>Phone:</td>
+		<td>412-246-0246</td>
+	</tr>
+</table>
+
+<p class="note"><br>*I am a student studying information systems at Carnegie Mellon 
+	University and this project is to show my introductory skills in application
+	design and development. I believe simplicity is the best way to effectively display
+	information. Do not hate on the simplicity of my site.
+	<br><br><em>... in truth I tried my best and slaved over nights and nights on this site and the flavors in my creamery.</em></p>
+
+</div>
+
+<div style="clear:both;"></div>
+</div>

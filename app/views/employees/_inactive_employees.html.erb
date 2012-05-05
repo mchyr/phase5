@@ -1,20 +1,36 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>&nbsp;</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @inactive_employees.each do |employee| %>
-      <tr>
-        <td><%= link_to employee.name, employee_path(employee) %></td>
-				<td>
-					<%# link_to raw("<i class='icon-file'></i> Details"), employee_path(employee), :class => 'btn btn-mini' %>
-          <%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_employee_path(employee), :class => 'btn btn-mini' %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
+<div id="container">
+    <br>
+
+<p class="supertiny"></p>
+
+<h1>Inactive Employees</h1>
+
+<table class="datagrid">
+    <th>Name</th>
+    <th>Phone</th>
+    <th>Currently Assigned</th>
+    <th>Role</th>
+    <th>Active</th>
+    <th>&nbsp;</th>
+    
+<% @inactive_employees.each do |employee| %>
+    <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
+    <td><%= link_to employee.name, employee_path(employee) %></td>
+    <td><%= number_to_phone employee.phone %></td>
+    <td><%= link_to employee.current_assignment.store.name, store_path(employee.current_assignment.store) unless employee.current_assignment.nil? %></td>
+    <td><%= employee.role.capitalize %></td>
+    <td><%= "#{(employee.active)? "Yes" : "No"}" %></td>
+    <td><%= link_to 'Edit', edit_employee_path(employee), :class => 'btn' %></td>
+
+  </tr>
+<% end %>
 </table>
-<%= will_paginate @inactive_employees, :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+
+<p><strong><%= link_to 'New Employee', new_employee_path %></strong></p>
+
+<!-- Add the pagination using will_paginate gem -->
+<span class="smtext">
+  <%= will_paginate @employees, :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+</span>
+
+</div>

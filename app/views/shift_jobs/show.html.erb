@@ -1,0 +1,34 @@
+<div id="container">
+	<br>
+	<p id="notice"><%= notice %></p>
+	<p class="supertiny"></p>
+
+<table>
+<thead>
+  <th>Shift and Job Details</th>
+</thead>
+<tr>
+	<td><b>Employee: </b><%= link_to @shift_job.shift.assignment.employee.name, employee_path(@shift_job.shift.assignment.employee) %></td>
+</tr>
+
+<tr>
+ 	<td><b>Store: </b><%= link_to @shift_job.shift.assignment.store.name, store_path(@shift_job.shift.assignment.store) %></td>
+</tr>
+
+<tr>
+  <td><b>Shift Time:</b>
+  <%= link_to @shift_job.shift.name, shift_path(@shift_job.shift) %></td>
+</tr>
+
+<tr>
+  <td><b>Job:</b>
+  <%= link_to @shift_job.job.name, job_path(@shift_job.job) %></td>
+</tr>
+
+</table>
+
+
+<%= link_to 'Edit', edit_shift_job_path(@shift_job), :class => "btn" %>
+<%= link_to 'Back', shift_jobs_path, :class => "btn" %>
+
+</div>

@@ -1,0 +1,125 @@
+<div id="static">
+  <table>
+    <thead>
+    <th>Employee Details</th>
+  </thead>
+
+<thead>
+  <th><b><%= @employee.proper_name %></b></th>
+</thead>
+
+<tr>
+  <td><b><%= @employee.role.capitalize %></b> <%= link_to "#{(@employee.current_assignment.nil?)? "(not assigned)" : "#{@employee.current_assignment.store.name}"}", store_path(@employee.current_assignment.store) unless @employee.current_assignment.nil? %></td>
+</tr>
+
+<tr>
+  <td><b>SSN:</b> <%= @employee.ssn %></td>
+</tr>
+
+<tr>
+  <td><b>Date of birth:</b> <%= @employee.date_of_birth.strftime("%B %d, %Y") %></td>
+</tr>
+
+<tr>
+  <td><b>Phone:</b> <%= number_to_phone @employee.phone %></td>
+</tr>
+
+<tr>
+  <td><b>Active:</b> <%= "#{(@employee.active)? "Yes" : "No"}" %></td>
+</tr>
+  
+<tr>
+  <td><b>Current Store Assignment:</b> 
+  <% if !@employee.current_assignment.nil? %>
+    <%= link_to @employee.current_assignment.store.name, store_path(@employee.current_assignment.store) %>
+  <% else %>
+    N/A
+  <% end %></td>
+</tr>
+</table>
+
+<table>
+      <thead>
+        <th><b>Shift History:</b></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </thead>
+
+      <thead>
+        <th>Store</th>
+        <th>Date</th>
+        <th>Time Worked</th>
+        <th></th>
+      </thead>
+      <% if @shifts_past.size > 0 %>  
+        <% @shifts_past.each do |shift| %>
+          <tr>
+            <td><%= link_to shift.assignment.store.name, store_path(shift.assignment.store) %></td>
+            <td><%= shift.date %></td>
+            <td><%= shift.time_worked_in_hours %></td>
+            <td><%= link_to 'Details', shift_path(shift), :class=>"btn" %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td>None</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      <% end %>
+
+      <div id="page_nav">
+        <%= will_paginate @shifts_past, :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+      </div>
+
+      <br /><br/>
+
+      <thead>
+        <th></th>
+      </thead>
+      
+      <thead>
+        <th><b>Upcoming Shifts:</b></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </thead>
+
+      <thead>
+        <th>Store</th>
+        <th>Date</th>
+        <th>Hours</th>
+        <th></th>
+      </thead>
+      <% if @shifts.size > 0 %>  
+        <% @shifts.each do |shift| %>
+          <tr>
+            <td><%= link_to shift.assignment.store.name, store_path(shift.assignment.store) %></td>
+            <td><%= shift.date %></td>
+            <td><%= shift.time_worked_in_hours %></td>
+            <td><%= link_to 'Details', shift_path(shift), :class=>"btn" %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td>None</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      <% end %>
+
+      <div id="page_nav">
+        <%= will_paginate @shifts, :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+      </div>
+
+      <br /><br/>
+
+  </table>
+
+<% if !current_user.nil? && current_user.role != 'employee' %>
+  <%= link_to 'Edit', edit_employee_path(@employee), :class => "btn" %>
+  <%= link_to 'Back', employees_path, :class => "btn"  %>
+<% end %>

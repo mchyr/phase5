@@ -1,0 +1,35 @@
+<div id="container">
+    <br>
+
+<p class="supertiny"></p>
+
+<h1>Current Shifts and Jobs</h1>
+
+<table class="datagrid">
+    <thead>
+        <th>Employee</th>
+        <th>Store</th>
+        <th>Shift Time</th>
+        <th>Job</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </thead>
+    
+    
+<% @shift_jobs.each do |shift_job| %>
+    <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
+    <td><%= link_to shift_job.shift.assignment.employee.name, employee_path(shift_job.shift.assignment.employee) %></td>
+    <td><%= link_to shift_job.shift.assignment.store.name, store_path(shift_job.shift.assignment.store) %></td>
+    <td><%= link_to shift_job.shift.name, shift_path(shift_job.shift) %></td>
+    <td><%= link_to shift_job.job.name, job_path(shift_job.job) %></td>
+    <td><%= link_to 'Details', shift_job, :class => 'btn' %></td>
+    <td><%= link_to 'Edit', edit_shift_job_path(shift_job), :class => 'btn' %></td>
+    <td><%= link_to 'Destroy', shift_job, confirm: 'Are you sure?', method: :delete, :class => 'btn danger' %></td>
+    </tr>
+<% end %>
+</table>
+
+<p><strong><%= link_to 'New Shift Job', new_shift_job_path, :class => 'btn' %></strong></p>
+
+</div>

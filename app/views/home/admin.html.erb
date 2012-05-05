@@ -1,0 +1,41 @@
+<div id="static">
+	<table>
+		<thead>
+			<th>Stores</th>
+		</thead>
+		<thead>
+			<th>Name</th>
+			<th>Phone</th>
+			<th>Employees</th>
+			<th>Shift Hours </th>
+			<th></th>
+			<th></th>
+			<th></th>
+		</thead>
+		<% if @stores.size > 0 %>
+		<% @stores.each do |store| %>
+		<tr>
+			<td><%= link_to store.name, store_path(store) %></td>
+			<td><%= number_to_phone store.phone %></td>
+			<td><%= store.assignments.current.count %></td>
+			<td><%= store.get_shift_hours_for_past_days(14) %></td>
+			<td><%= link_to 'New Assignment', new_assignment_path(:store_id => store.id), :class => 'btn' %></td>
+			<td><%= link_to 'Details', store, :class => 'btn' %></td>
+		</tr>
+		<% end %>
+		<% else %>
+		<tr>
+			<td>None</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		<% end %>
+	</table>
+
+	<div id="page_nav">
+		<%= will_paginate @stores, :previous_label => "Previous&nbsp;", :next_label => "Next&nbsp;" %>
+	</div>

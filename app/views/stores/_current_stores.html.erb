@@ -1,24 +1,34 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Store Name</th>
-			<th>Store Phone</th>
-      <th class="centered">Staff Count</th>
-      <th>Actions</th>
-    </tr>
+<div id="container">
+    <br>
+
+<p class="supertiny"></p>
+
+<h1>Current Stores</h1>
+<table>
+  <thead class="datagrid">
+    <th>Store Name</th>
+    <th>Store Phone</th>
+    <th class ="centered">Staff Count</th>
+    <th></th>
+    <th></th>
+    <th>&nbsp;</th>
   </thead>
-  <tbody>
-    <% @stores.each do |store| %>
-      <tr>
-        <td><%= link_to store.name, store_path(store) %></td>
-				<td><%= number_to_phone store.phone %></td>
-				<td class="centered"><%= store.assignments.current.size %></td>
-        <td>
-					<%= link_to raw("<i class='icon-file'></i> Details"), store_path(store), :class => 'btn btn-mini' %>
-          <%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_store_path(store), :class => 'btn btn-mini' %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
+
+  <% i = 0 %>
+  <% @stores.each do |store| %>
+  <% i += 1 %>
+  <tr class="<%= cycle('dg_list_Line_odd', 'dg_list_line_even') %>">
+    <td><%= "#{i}. " %><%= link_to store.name, store_path(store) %></td>
+    <td><%= number_to_phone store.phone %></td>
+    <td><%= store.assignments.current.count %></td>
+    <td><%= link_to 'Edit', edit_store_path(store), :class => "btn primary" %></td>
+  </tr>
+
+  <% end %>
 </table>
-<%= will_paginate @stores, :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+
+<span class="smtext">
+  <%= will_paginate @stores, :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+</span>
+
+</div>

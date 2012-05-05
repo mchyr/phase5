@@ -1,0 +1,60 @@
+<div id="container">
+    <br>
+
+<p class="supertiny"></p>
+
+<h1>Current Jobs</h1>
+
+<table class="datagrid">
+    <thead>
+        <th>Name</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </thead>
+    
+    
+<% @jobs.each do |job| %>
+    <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
+    <td><%= link_to job.name, job_path(job) %></td>
+    <td><%= link_to 'Details', job, :class => 'btn' %></td>
+    <td><%= link_to 'Edit', edit_job_path(job), :class => 'btn' %></td>
+    <td><%= link_to 'Destroy', job, confirm: 'Are you sure?', method: :delete, :class => 'btn danger' %></td>
+    </tr>
+<% end %>
+</table>
+
+<div id="page_nav">
+	<%= will_paginate @jobs, :previous_label => "Previous&nbsp;", :next_label => "Next&nbsp;" %>
+</div>
+<br/>
+<br/>
+
+<p><strong><%= link_to 'New Job', new_job_path, :class => 'btn' %></strong></p>
+
+
+<h1>Past Jobs</h1>
+
+<table class="datagrid">
+    <thead>
+        <th>Name</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </thead>
+    
+    
+<% @inactive_jobs.each do |job| %>
+    <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
+    <td><%= link_to job.name, job_path(job) %></td>
+    <td><%= link_to 'Details', job, :class => 'btn' %></td>
+    <td><%= link_to 'Edit', edit_job_path(job), :class => 'btn' %></td>
+    </tr>
+<% end %>
+</table>
+
+<div id="page_nav">
+    <%= will_paginate @inactive_jobs, :previous_label => "Previous&nbsp;", :next_label => "Next&nbsp;" %>
+</div>
+<br/>
+<br/>

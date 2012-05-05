@@ -1,0 +1,53 @@
+<div id="container">
+  <br>
+  <h1>Current Shifts</h1>
+
+  <table>
+  <thead>
+    <th>Employee</th>
+    <th>Store</th>
+    <th>Date</th>
+    <th>Hours</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </thead>
+
+  <% if @shifts.size > 0 %>
+    <% @shifts.each do |shift| %>
+      <tr>
+        <td><%= link_to shift.assignment.employee.name, employee_path(shift.assignment.employee) %></td>
+        <td><%= link_to shift.assignment.store.name, store_path(shift.assignment.store) %></td>
+        <td><%= shift.date.strftime("%m/%d/%y") %></td>
+        <td><%= "#{shift.start_time.localtime.strftime("%l:%M %p")} - #{shift.end_time.localtime.strftime("%l:%M %p")}" %></td>
+        <td><%= link_to 'Details', shift, :class => 'btn' %></td>
+        <% if can? :update, shift %>
+        <td><%= link_to 'Edit', edit_shift_path(shift), :class => 'btn' %></td>
+        <% end %>
+        <td><%= link_to 'Destroy', shift, confirm: 'Are you sure?', method: :delete, :class => 'btn danger' %></td>
+      </tr>
+    <% end %>
+  <% else %>
+    <tr>
+      <td>None</td>
+      <td>Store</td>
+      <td>Date</td>
+      <td>Hours</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  <% end %>
+</table>
+
+<div id="page_nav">
+  <%= will_paginate @shifts, :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+</div>
+
+<br /><br/>
+
+<% if can? :create, Shift %>
+<%= link_to 'New Shift', new_shift_path, :class => 'btn primary' %>
+<% end %>
+
+</div>

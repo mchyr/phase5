@@ -1,23 +1,30 @@
-<h2>Inactive Stores</h2>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Store Name</th>
-			<th>Address</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
+<div id="container">
+    <br>
+
+<p class="supertiny"></p>
+
+<h1>Inactive Stores</h1>
+
+<table class="datagrid">
+    <thead>
+        <th>Store Name/th>
+        <th>Store Phone</th>
+        <th></th>
+        <th></th>
+        <th>&nbsp;</th>
+    </thead>
+
     <% @inactive_stores.each do |store| %>
-      <tr>
-        <td><%= link_to store.name, store_path(store) %></td>
-				<td><%= store.street %>, <%= store.city %></td>
-        <td>
-					<%= link_to raw("<i class='icon-file'></i> Details"), store_path(store), :class => 'btn btn-mini' %>
-          <%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_store_path(store), :class => 'btn btn-mini' %>
-        </td>
-      </tr>
+    <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even')%>">
+      <td><%= link_to store.name, store_path(store) %></td>
+      <td><%= number_to_phone store.phone %></td>
+      <td><%= link_to 'Edit', edit_store_path(store), :class => 'btn primary' %></td>
+    </tr>
     <% end %>
-  </tbody>
-</table>
-<%= will_paginate @inactive_stores, :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+  </table>
+
+  <span class="smtext">
+    <%= will_paginate @inactive_stores, :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next", :param_name => "inactive_page" %>
+    </span>
+
+  </div>

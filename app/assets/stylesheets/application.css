@@ -11,3 +11,45 @@
  *= require_self
  *= require_tree .
 */
+body{
+	background-color: grey;
+}
+
+#container{
+	width:90%; 
+	margin: 0 auto;
+}
+
+#main{
+	width:60%; 
+	float: left;
+	padding: 10px;
+}
+
+#pic{
+	width:35%; 
+	float:left; 
+	margin:0 auto;
+	padding: 10px;
+	padding-left: 0;
+}
+
+#header{
+	background: #f0dfe9;
+}
+
+
+#main2{
+	width:40%; 
+	float: left;
+	padding: 10px;
+}
+
+#pic2{
+	width:55%; 
+	float:left; 
+	margin:0 auto;
+	padding: 10px;
+	padding-left: 0;
+
+}

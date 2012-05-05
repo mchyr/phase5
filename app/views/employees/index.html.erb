@@ -1,13 +1,58 @@
-<div class="row">
-	<div class="span8">
-		<h2>Current Employees</h2>
-		<%= render :partial => "current_employees" unless @employees.empty? %>
-	</div>
-	<div class="span4">
-		<h2>Former Employees</h2>
-		<%= render :partial => "inactive_employees" unless @inactive_employees.empty? %>
-		
-	</div>
-</div>
+<div id="container">
+    <br>
 
-<%= link_to raw("<i class='icon-plus icon-white'></i> Add a New Employee"), new_employee_path, :class => 'btn btn-primary', :id => 'Create Employee' %>
+<p class="supertiny"></p>
+
+<h1>Current Employees</h1>
+
+<table class="datagrid">
+    <th>Name</th>
+    <th>Phone</th>
+    <th>Currently Assigned</th>
+    <th>Role</th>
+    <th>Active</th>
+    <th>&nbsp;</th>
+    
+<% @employees.each do |employee| %>
+    <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
+    <td><%= link_to employee.name, employee_path(employee) %></td>
+    <td><%= number_to_phone employee.phone %></td>
+    <td><%= link_to employee.current_assignment.store.name, store_path(employee.current_assignment.store) unless employee.current_assignment.nil? %></td>
+    <td><%= employee.role.capitalize %></td>
+    <td><%= "#{(employee.active)? "Yes" : "No"}" %></td>
+    <td><%= link_to 'Edit', edit_employee_path(employee), :class => 'btn' %></td>
+
+  </tr>
+<% end %>
+</table>
+<span class="smtext">
+	<%= will_paginate @employees, :previous_label => "Previous&nbsp;", :next_label => "Next&nbsp;" %>
+</span>
+
+<p><strong><%= link_to 'New Employee', new_employee_path, :class => 'btn' %></strong></p>
+
+
+<h1>Past Employees</h1>
+
+<table class="datagrid">
+    <th>Name</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    
+<% @past_employees.each do |employee| %>
+    <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
+    <td><%= link_to employee.name, employee_path(employee) %></td>
+    <td><%= link_to 'Edit', edit_employee_path(employee), :class => 'btn' %></td>
+
+  </tr>
+<% end %>
+</table>
+<!-- Add the pagination using will_paginate gem -->
+<span class="smtext">
+  <%= will_paginate @employees, :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+</span>
+
+</div>

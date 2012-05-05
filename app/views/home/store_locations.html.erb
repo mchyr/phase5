@@ -1,0 +1,37 @@
+<div id="static">
+	<table>
+		<thead>
+			<th><center><%= image_tag Store.create_map_of_all_stores_link(zoom=12, width=900, height=400) %></th>
+		</thead>
+	</table>
+	<h1>Our Store Locations:</h1>
+	<table>
+		<thead class="datagrid">
+			<th>Store Name</th>
+			<th>Store Phone</th>
+			<th></th>
+			<th></th>
+			<th>&nbsp;</th>
+		</thead>
+
+		<% i = 0 %>
+		<% @stores.each do |store| %>
+		<% i += 1 %>
+		<tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
+			<td><%= "#{i}. "%><%= link_to store.name, store_path(store) %></td>
+			<td><%= number_to_phone store.phone %></td>
+		</tr>
+
+		<% end %>
+	</table>
+	<p class="supertiny"></p>
+
+	<span class="smtext">
+		<%= will_paginate @stores, :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+	</span>
+	<table>
+		<thead>
+			<th><center><%= image_tag Store.create_map_all_link %></th>
+		</thead>
+	</table>
+</div>

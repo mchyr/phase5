@@ -1,13 +1,16 @@
+<p class="supertiny">&nbsp;</p>
 
 <div id="footer">
+	
 	<%= link_to 'Home', home_path %>&nbsp;&nbsp;::&nbsp;&nbsp;
-  <%= link_to 'About AMC', about_path %>&nbsp;&nbsp;::&nbsp;&nbsp;
+ 	<%= link_to 'About Us', about_path %>&nbsp;&nbsp;::&nbsp;&nbsp;
 	<%= link_to 'Contact Us', contact_path %>&nbsp;&nbsp;::&nbsp;&nbsp;
 	<%= link_to 'Privacy Policy', privacy_path %>
 	<br /><br />
 	<div id="copy">
-		Webmaster: <%= mail_to("profh@cmu.edu", "Klingon Code Warrior", :encode => "javascript") %> 
+		<div><%= image_tag 'flashingheart.gif' %></div>
+		Webmaster: <%= mail_to("mchyr@cmu.edu", "Michelle Chyr", :encode => "javascript") %> 
 		&nbsp;&nbsp;&copy 2012
-		<p class="supertiny">&nbsp;</p>
 	</div>
+
 </div>

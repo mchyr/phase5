@@ -1,17 +1,58 @@
-<div class="row">
-	<div class="span8">
-		<h3>Employee Details:</h3>
-		<%= render :partial => "employee_details" %>
-	</div>
-	<div class="span4">
-		<h3>Assignment History:</h3>
-		<%= render :partial => "assignment_history" unless @assignments.empty? %>
-		<%= link_to(raw("<i class='icon-plus icon-white'></i> New Assignment"), new_assignment_path(:id => @employee.id, :from => 'employee'), :class => 'btn btn-primary') %>
-	</div>
-</div>
+<div id="container">
+	<br>
+	<p id="notice"><%= notice %></p>
+	<p class="supertiny"></p>
 
-<div class="form-actions">
-  <%= link_to raw("<i class='icon-th-list'></i> Display All Employees"), employees_path, :class => 'btn'  %>&nbsp;&nbsp;
-  <%= link_to raw("<i class='icon-pencil'></i> Edit #{@employee.proper_name}"), edit_employee_path(@employee), :class => 'btn' %>&nbsp;&nbsp;
-  <%= link_to raw("<i class='icon-trash icon-white'></i> Delete #{@employee.proper_name}"), employee_path(@employee), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+<h1>Employee Details:</h1>
+
+<p>
+	<b>Name:</b>
+  	<%= @employee.name %>
+</p>
+
+<p>
+	<b>Phone:</b>
+  	<%= @employee.phone[0,3]+"-"+@employee.phone[3,3]+"-"+@employee.phone[6,4] %>
+
+</p>
+
+<p>
+	<b>Date of Birth:</b>
+	<%= @employee.date_of_birth.strftime("%m/%d/%y") %>
+</p>
+
+<p>
+	<b>SSN:</b>
+	<%= @employee.ssn %>
+</p>
+
+<p>
+	<b>Role:</b>
+	<%= @employee.role.capitalize %>
+</p>
+
+<p>
+	<b>Active:</b>
+	<%= "#{(@employee.active)? "Yes" : "No"}" %>
+</p>
+
+<p>
+	<b>Assignment History:</b>
+	<table>
+  		<% @assignments.reverse.each do |assignment| %>
+  		<tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
+    		<% if assignment.end_date.nil? %>
+      			<li><%= link_to assignment.store.name, store_path(assignment.store) %>&nbsp;<span class="label important">Current</span></li>
+    		<% else %>
+      			<li><%= link_to assignment.store.name, store_path(assignment.store) %></li>
+   			<% end %>  
+ 		</tr>
+ 		<% end %>
+	</table>
+</p>
+
+<%= link_to 'Edit', edit_employee_path(@employee) %> |
+<%= link_to 'Delete', @employee, :confirm => 'Are you sure?', :method => :delete %> |
+<%= link_to 'Back', employees_path %>
+
 </div>

@@ -1,15 +1,14 @@
-<div class="row">
-	<div class="span8">
-		<h2>Current Stores</h2>
-		<%= render :partial => "current_stores" %>
-		<br />
-		<%= render :partial => "inactive_stores" unless @inactive_stores.empty? %>
-	</div>
-	<div class="span4">
-		<h2>Find A Store</h2>
-		<%= render :partial => "stores_map" %>
-		
-	</div>
-</div>
+<div id="container">
+    <br>
 
-<%= link_to raw("<i class='icon-plus icon-white'></i> Add a New Store"), new_store_path, :class => 'btn btn-primary', :id => 'Create Store' %>
+<p class="supertiny"></p>
+
+<h1>Current Stores</h1>
+<%= render :partial => "current_stores" %><br/>
+<%= render :partial => "inactive_stores" unless @inactive_stores.empty? %>
+
+<p><strong><%= link_to "Create Store", new_store_path, :class => 'btn' %></strong></p>
+
+<%= render :partial => "stores_map" %>
+
+</div>

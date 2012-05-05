@@ -1,17 +1,35 @@
-<div class="row">
-	<div class="span8">
-		<h3>Assignment Details</h3>
-		<%= render :partial => "assignment_details" %>
-	</div>
-	<div class="span4">
-		<h3>Shifts Worked</h3>
-		<%= render :partial => "shift_history" unless @shifts.empty? %>
-	</div>
-</div>
+<div id="container">
+	<br>
+	<p id= "notice"><%= notice %></p>
 
-<div class="form-actions">
-  <%= link_to raw("<i class='icon-th-list'></i> Display All Assignments"), assignments_path, :class => 'btn'  %>&nbsp;&nbsp;
-  <%= link_to raw("<i class='icon-pencil'></i> Edit Assignment"), edit_assignment_path(@assignment), :class => 'btn' %>&nbsp;&nbsp;
-  <%= link_to raw("<i class='icon-trash icon-white'></i> Delete Assignment"), assignment_path(@assignment), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
-</div>
+<h1>Assignment Details:</h1>
 
+<p>
+	<b>Store:&nbsp;&nbsp;</b>
+	<%= @assignment.store.name %>
+</p>
+
+<p>
+	<b>Employee:&nbsp;&nbsp;</b>
+	<%= @assignment.employee.name %>
+</p>
+
+<p>
+	<b>Start Date:&nbsp;&nbsp;</b>
+	<%= @assignment.start_date.strftime("%m/%d/%y") %>
+</p>
+ 
+ <p>
+	<b>End Date:&nbsp;&nbsp;</b>
+	<% if @assignment.end_date != nil %>
+		<%= @assignment.end_date.strftime("%m/%d/%y") %>
+	<% else %>
+		<%= "The assignment has not ended" %>
+	<% end %>
+</p>
+
+<%= link_to 'Edit', edit_assignment_path(@assignment) %> |
+<%= link_to 'Delete', @assignment, :confirm => 'Are you sure?', :method => :delete %> |
+<%= link_to 'Back', assignments_path %>
+
+</div>
