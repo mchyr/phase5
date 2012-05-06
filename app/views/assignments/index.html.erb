@@ -27,10 +27,12 @@
 </table>
 
 <br/>
+
+<%= link_to 'New Assignment', new_assignment_path, :class => 'btn' %>
+
 <span class="smtext">
   <%= will_paginate @assignment, :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
 </span>
-<%= link_to 'New Assignment', new_assignment_path, :class => 'btn' %>
 
 <h1>Past Assignments</h1>
 

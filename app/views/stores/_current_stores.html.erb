@@ -2,10 +2,12 @@
     <br>
 
 <p class="supertiny"></p>
-
 <h1>Current Stores</h1>
+
+<%= render :partial => "stores_map" %>
+
 <table>
-  <thead class="datagrid">
+  <thead>
     <th>Store Name</th>
     <th>Store Phone</th>
     <th class ="centered">Staff Count</th>
@@ -21,7 +23,7 @@
     <td><%= "#{i}. " %><%= link_to store.name, store_path(store) %></td>
     <td><%= number_to_phone store.phone %></td>
     <td><%= store.assignments.current.count %></td>
-    <td><%= link_to 'Edit', edit_store_path(store), :class => "btn primary" %></td>
+    <td><%= link_to 'Edit', edit_store_path(store), :class => "btn" %></td>
   </tr>
 
   <% end %>

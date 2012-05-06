@@ -1,14 +1,11 @@
 <div id="container">
     <br>
-
 <p class="supertiny"></p>
-
-<h1>Current Stores</h1>
 <%= render :partial => "current_stores" %><br/>
 <%= render :partial => "inactive_stores" unless @inactive_stores.empty? %>
 
 <p><strong><%= link_to "Create Store", new_store_path, :class => 'btn' %></strong></p>
 
-<%= render :partial => "stores_map" %>
+</br>
 
 </div>

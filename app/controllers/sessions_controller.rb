@@ -3,8 +3,8 @@ class SessionsController < ApplicationController
 	end
 
 	def create
-		user = User.authenticate(params[:email], params[:password])
-		if user
+		user = User.find_by_email(params[:email])
+		if user && user.authenticate(params[:password])
 			if params[:remember_me]
 				cookies.permanent[:auth_token] = user.auth_token
 			else
@@ -12,11 +12,11 @@ class SessionsController < ApplicationController
 			end
 
 			if user.role? 'admin'
-				redirect_to admin_dash_path, notice: "Welcome!"
+				redirect_to root_url, notice: "Welcome!"
 			elsif user.role? 'manager'
-				redirect_to manager_dash_path, notice: "Hello!"
+				redirect_to root_url, notice: "Hello!"
 			elsif user.role? 'employee'
-				redirect_to employee_dash_path
+				redirect_to root_url
 			else
 				redirect_to root_url, notice: "You are logged in."
 			end
@@ -27,6 +27,6 @@ class SessionsController < ApplicationController
 
 	def destroy
 		cookies.delete(:auth_token)
-		redirect_to home_path, :notice => "You have been logged out."
+		redirect_to root_url, :notice => "You have been logged out."
 	end
 end

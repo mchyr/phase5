@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
 
   before_filter :check_login, :except => [:new, :create]
-  authorize_resource
 
   # GET /users
   # GET /users.json

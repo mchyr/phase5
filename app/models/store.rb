@@ -32,7 +32,7 @@ class Store < ActiveRecord::Base
   # Misc Constants
   STATES_LIST = [['Ohio', 'OH'],['Pennsylvania', 'PA'],['West Virginia', 'WV']]
 
-  def create_map_link(zoom=13, width=800, height=800)
+  def create_map_link(zoom=13, width=600, height=400)
     markers = ""; i = 1
       markers += "&markers=color:red%7Ccolor:red%7Clabel:#{i}%7C#{self.latitude},#{self.longitude}"
       i += 1
@@ -57,7 +57,7 @@ class Store < ActiveRecord::Base
     puts avg_lat
     puts avg_long
  
-    map = "htp://maps.google.com/maps/api/staticmap?center=#{center},#{center}&zoom=#{zoom}&size=#{width}x#{height}&maptype=roadmap#{markers}&sensor=false"
+    map = "http://maps.google.com/maps/api/staticmap?center=#{avg_lat},#{avg_long}&zoom=#{zoom}&size=#{width}x#{height}&maptype=roadmap#{markers}&sensor=false"
   end
 
   def find_store_coordinates

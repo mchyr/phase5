@@ -5,6 +5,13 @@
 
 <h1><%= "#{@store.name}"%> Store:</h1>
 
+<div>
+	<br/>
+	<%= image_tag @store.create_map_link %>
+	<br/></br>
+	<p><em><%= "#{@store.name}" %> located here.</em></p>
+</div>
+
 <p>
 	<b>Address: </b><br>
 	<%= @store.street %><br>
@@ -19,28 +26,21 @@
 <p>
 	<b>Current Employees: </b>
 	<table>
-		<%= @employees.each do |assignment| %>
+		<% @employees.each do |assignment| %>
 		<tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even')%>">
-			<li><%= link_to assignment.employee.name, employee_path(assignment.employee) unless assignment.employee.nil? %></li>
+			<td><%= link_to assignment.employee.name, employee_path(assignment.employee) unless assignment.employee.nil? %></td>
 		</tr>
 		<% end %>
 	</table>
 </p>
 
-<span class="smtext">
-	<%= will_paginate @employees, :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
-</span>
-
 <%= link_to 'Edit', edit_store_path(@store), :class => 'btn' %>
 <%= link_to 'Back', stores_path, :class => 'btn' %>
 <%= link_to 'Enroll', new_assignment_path(@store), :class => 'btn' %>
-<%= linki_to 'Destroy', assignment_path(@store), confirm: 'Are you sure?', method: :delete, :class => 'btn danger' %>
+<%= link_to 'Destroy', assignment_path(@store), confirm: 'Are you sure?', method: :delete, :class => 'btn danger' %>
 
-<div class="span4">
-	<br/>
-	<%= image_tag @store.create_map_link %>
-	<br/></br>
-	<p><em><%= "#{@store.name}" %> located here.</em></p>
-</div>
+<span class="smtext">
+	<%= will_paginate @employees, :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+</span>
 
 </div>
