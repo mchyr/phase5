@@ -9,12 +9,12 @@
  * Date: Sun Dec 25 20:18:31 PST 2011
  */
 /* Reset.less
- * Props to Eric Meyer (meyerweb.com) for his CSS reset file. We're using an adapted version here	that cuts out some of the reset HTML elements we will never need here (i.e., dfn, samp, etc).
+ * Props to Eric Meyer (meyerweb.com) for his CSS reset file. We're using an adapted version here that cuts out some of the reset HTML elements we will never need here (i.e., dfn, samp, etc).
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 html, body {
   margin: 0;
   padding: 0;
-	background-color: #F0DFE9;
+  background-color: #F0DFE9;
 }
 h1,
 h2,
@@ -1213,8 +1213,8 @@ table .span16 {
 }
 .zebra-striped thead {
   background-color: #000;
-	color: #fff;
-	font-weight: bold;
+  color: #fff;
+  font-weight: bold;
 }
 .zebra-striped tbody tr:nth-child(even) td, .zebra-striped tbody tr:nth-child(even) th {
   background-color: #fee95d;
@@ -1343,7 +1343,7 @@ table .headerSortUp.purple, table .headerSortDown.purple {
 .topbar p {
   margin: 0;
   line-height: 40px;
-	color: #808080;
+  color: #808080;
 }
 .topbar p a:hover {
   background-color: transparent;
@@ -1798,8 +1798,8 @@ footer {
   margin-top: 17px;
   padding-top: 17px;
   border-top: 1px solid #eee;
-	background-color:#E6E6E6;
-	text-align: center;
+  background-color:#E6E6E6;
+  text-align: center;
 }
 .page-header {
   margin-bottom: 17px;

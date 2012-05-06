@@ -1,46 +1,55 @@
-body { 
-	/*padding-top: 60px;*/ 
-	/*font-size: 14px;*/
-} 
-
-.supertiny {
-	font-size: 5px;
-	/*line-height: 1.5;*/
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require_tree .
+*/
+body{
+	background-color: grey;
 }
 
-.well {
-	line-height: 1.5;
+#container{
+	width:90%; 
+	margin: 0 auto;
 }
 
-.well li {
-	font-size: 130%;
-	line-height: 1.5;
+#main{
+	width:60%; 
+	float: left;
+	padding: 10px;
 }
 
-.table th.centered, .table td.centered {
-    text-align: center;
+#pic{
+	width:35%; 
+	float:left; 
+	margin:0 auto;
+	padding: 10px;
+	padding-left: 0;
 }
 
-select.date { width: 90px; }
-
-.table-striped tbody tr:nth-child(2n+1) td {
-	background-color: #E6E6E6;
+#header{
+	background: #f0dfe9;
 }
 
-.navbar-inner {
-	-moz-border-radius: 0px;
-	border-radius: 0px;
+
+#main2{
+	width:40%; 
+	float: left;
+	padding: 10px;
 }
 
-#footer {
-	margin-top: 15px;
-  padding-top: 0px;
-  /*border-top: 1px solid #eee;*/
-	background-color:#E6E6E6;
-	text-align: center;
-}
+#pic2{
+	width:55%; 
+	float:left; 
+	margin:0 auto;
+	padding: 10px;
+	padding-left: 0;
 
-#copy {
-	font-size: 85%;
-	text-align: center;
 }
