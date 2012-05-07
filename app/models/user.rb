@@ -44,10 +44,10 @@ class User < ActiveRecord::Base
     end while User.exists?(column => self[column])
   end
 
-  # def self.authenticate(login, pass)
-  #   user = find_by_email(login)
-  #   return user if user && user.password_hash == user.encrypt_password(pass)
-  # end
+  def self.authenticate(login, pass)
+    user = find_by_email(login)
+    return user if user && user.password_hash == user.encrypt_password(pass)
+  end
 
   # def encrypt_password(pass)
   #   BCrypt::Engine.hash_secret(pass, password_salt)

@@ -12,11 +12,11 @@ class SessionsController < ApplicationController
 			end
 
 			if user.role? 'admin'
-				redirect_to root_url, notice: "Welcome!"
+				redirect_to admin_dash_path, notice: "Welcome!"
 			elsif user.role? 'manager'
-				redirect_to root_url, notice: "Hello!"
+				redirect_to manager_dash_path, notice: "Hello!"
 			elsif user.role? 'employee'
-				redirect_to root_url
+				redirect_to employee_dash_path
 			else
 				redirect_to root_url, notice: "You are logged in."
 			end

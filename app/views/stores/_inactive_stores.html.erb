@@ -18,6 +18,7 @@
     <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even')%>">
       <td><%= link_to store.name, store_path(store) %></td>
       <td><%= number_to_phone store.phone %></td>
+      <td><%= link_to 'Details', store, :class => 'btn' %></td>
       <td><%= link_to 'Edit', edit_store_path(store), :class => 'btn' %></td>
     </tr>
     <% end %>

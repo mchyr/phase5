@@ -49,6 +49,15 @@ class Shift < ActiveRecord::Base
   def name
     "#{start_time.localtime.strftime("%l:%M %p")} - #{end_time.localtime.strftime("%l:%M %p")} at #{self.assignment.store.name}"
   end
+
+  def time_worked_in_minutes
+    diff_minutes = (self.end_time.localtime.hour*60+self.end_time.localtime.min - self.start_time.localtime.hour*60-self.start_time.localtime.min)
+    return diff_minutes
+  end
+
+  def time_worked_in_hours
+    time_worked_in_minutes/60
+  end
   
   # callback to set default end_time (on create only)
   before_create :set_shift_end_time
