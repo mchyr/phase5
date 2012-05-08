@@ -1,10 +1,11 @@
 class AssignmentsController < ApplicationController
 
   before_filter :check_login
+  authorize_resource
 
   def index
     @assignment = Assignment.current.by_store.by_employee.chronological.paginate(:page => params[:page]).per_page(10)
-    @past_assignments = Assignment.past.by_employee.by_store.paginate(:page => params[:page]).per_page(10)
+    @past_assignments = Assignment.past.by_employee.by_store.paginate(:page => params[:past_page]).per_page(10)
   end
 
   def show

@@ -28,6 +28,7 @@ class Employee < ActiveRecord::Base
   scope :admins, where('role = ?', 'admin')
   scope :alphabetical, order('last_name, first_name')
   scope :search, lambda{|term| where('first_name LIKE ? OR last_name LIKE ?', "#{term}%", "#{term}%")}
+
   # Other methods
   def name
     "#{last_name}, #{first_name}"
@@ -55,10 +56,12 @@ class Employee < ActiveRecord::Base
 
   def worked_hours_over_past_few_days(num=14)
     minutes = 0
-    self.shifts.for_past_days(num).each do |shift|
-      minutes += shift.time_worked_in_minutes
+    unless self.current_assignment.nil?
+      self.current_assignment.shifts.for_past_days(num).each do |shift|
+        min += ((shift.end_time.hour*60 + shift.end_time.min) - (shift.start_time.hour*60 + shift.start_time.min))
+      end
     end
-    minutes/60
+    return min/60
   end
   
   # Misc Constants

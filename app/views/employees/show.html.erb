@@ -31,10 +31,13 @@
 	<%= @employee.role.capitalize %>
 </p>
 
+<% if logged_in? && (current_user.role == 'admin' or (current_user.role == 'manager' && current_user.employee.current_assignment.store == @employee.current_assignment.store))%>
+
 <p>
 	<b>Active:</b>
 	<%= "#{(@employee.active)? "Yes" : "No"}" %>
 </p>
+<% end %>
 
 <p>
 	<b>Assignment History:</b>
@@ -54,5 +57,85 @@
 <%= link_to 'Edit', edit_employee_path(@employee) %> |
 <%= link_to 'Delete', @employee, :confirm => 'Are you sure?', :method => :delete %> |
 <%= link_to 'Back', employees_path %>
+
+<span class="smtext">
+	<%= will_paginate @assignments, :previous_label => "Previous&nbsp;", :next_label => "nbsp;Next" %>
+</span>
+
+<table>
+	<thead>
+		<th><b>Shift History:</b></th>
+		<th></th>
+		<th></th>
+		<th></th>
+	</thead>
+
+	<thead>
+		<th>Store</th>
+		<th>Date</th>
+		<th>Start Time</th>
+		<th>End Time</th>
+		<th>Time Worked</th>
+		<th></th>
+	</thead>
+	<% if @past_shifts.size > 0 %>
+	<% @Past_shifts.each do |shift| %>
+	<tr>
+		<td><%= link_to shift.assignment.store.name, store_path(shift.assignment.store) %></td>
+		<td><%= shift.date.strftime("%m/%d/%y") %></td>
+		<td><%= shift.start_time.strftime("%I:%M%p") %></td>
+		<td><%= shift.end_time.strftime("%I:%M%p") %></td>
+		<td><%=shift.worked_hours %></td>
+		<td><%= link_to 'Details', shift_path(shift), :class => 'btn' %></td>
+	</tr>
+	<% end %>
+	<% else %>
+	<tr>
+		<td>None</td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+	<% end %>
+
+	<thead>
+		<th></th>
+	</thead>
+
+	<thead>
+		<th><b>Upcoming Shifts:</b></th>
+		<th></th>
+		<th></th>
+		<th></th>
+	</thead>
+
+	<thead>
+		<th>Store</th>
+		<th>Date</th>
+		<th>Hours</th>
+		<th></th>
+	</thead>
+	<% if @shifts.size > 0 %>
+	<% @shifts.each do |shift| %>
+	<tr>
+		<td><%= link_to shift.assignment.store.name, store_path(shift.assignment.store) %></td>
+		<td><%= shift.date %></td>
+		<td><%= shift.worked_hours %></td>
+		<td><%= link_to 'Details', shift_path(shift), :class => 'btn' %></td>
+	</tr>
+	<% end %>
+	<% else %>
+	<tr>
+		<td>None</td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+	<% end %>
+
+</table>
+<% if can? :update, @employee %><%= link_to 'Edit', edit_employee_path(@employee), :class => "btn" %> <% end %>
+<%= link_to 'Back', employees_path, :class => "btn" %>
+<% if can? :delete, @employee %><%= link_to 'Delete', employee_path(@employee), confirm: 'Are you sure?', method: :delete, :class => 'btn danger' %><% end %>
 
 </div>

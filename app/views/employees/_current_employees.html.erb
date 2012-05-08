@@ -16,8 +16,8 @@
 				<td><%= link_to employee.current_assignment.store.name, store_path(employee.current_assignment.store) unless employee.current_assignment.nil? %></td>
         <td><%= employee.role.capitalize %></td>
 				<td>
-					<%= link_to raw("<i class='icon-file'></i> Details"), employee_path(employee), :class => 'btn btn-mini' %>
-          <%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_employee_path(employee), :class => 'btn btn-mini' %>
+					<%= link_to raw("<i class='icon-file'></i> Details"), employee_path(employee), :class => 'btn' %>
+          <%= link_to raw("<i class='icon-pencil'></i> Edit"), edit_employee_path(employee), :class => 'btn' %>
         </td>
       </tr>
     <% end %>

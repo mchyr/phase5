@@ -14,10 +14,10 @@
 
 <% @assignment.each do |assignment| %>
   <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
-    <td><%= link_to assignment.store.name, store_path(assignment.store) %></td>
-    <td><%= link_to assignment.employee.name, employee_path(assignment.employee) %></td>
-    <td><%= assignment.pay_level %></td>
-    <td><%= assignment.start_date.strftime("%m/%d/%y") %></td>
+    <td><%= link_to assignment.store.name, store_path(assignment.store) unless assignment.store.nil? %></td>
+    <td><%= link_to assignment.employee.name, employee_path(assignment.employee) unless assignment.employee.nil? %></td>
+    <td><%= assignment.pay_level unless assignment.nil? %></td>
+    <td><%= assignment.start_date.strftime("%m/%d/%y") unless assignment.nil? %></td>
     <td><%= link_to 'Details', assignment_path(assignment), :class => 'btn' %></td>
     <td><%= link_to 'Edit', edit_assignment_path(assignment), :class => 'btn' %></td>
     

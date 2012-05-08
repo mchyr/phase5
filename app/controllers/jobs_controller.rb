@@ -8,18 +8,22 @@ class JobsController < ApplicationController
 
 	def show
 		@job = Job.find(paams[:id])
+		authorize! :show, @job
 	end
 
 	def new
 		@job = Job.new
+		authorize! :new, @job
 	end
 
 	def edit
 		@job = Job.find(params[:id])
+		@authorize! :edit, @job
 	end
 
 	def create
 		@job = Job.new(params[:job])
+		authorize! :create, @job
 		respond_to do |format|
 			if @job.save
 				format.html {redirect_to @job, notice: 'Job was successfully created.'}
@@ -33,6 +37,7 @@ class JobsController < ApplicationController
 
 	def update
 		@job = Job.find(params[:id])
+		authorize! :update, @job
 		respond_to do |format|
 			if @job.update_attributes(params[:job])
 				format.html {redirect_to @job, notice: 'Job was successfully updated.'}
@@ -46,6 +51,7 @@ class JobsController < ApplicationController
 
 	def destroy
 		@job = Job.find(params[:id])
+		authorize! :destroy, @job
 		@job.destroy
 
 		respond_to do |format|

@@ -31,6 +31,19 @@
     </div>
 </div>
 
+<div id="wrap">
+	<div style="clear:both;"></div>
+	<div class="body">
+		<% flash.each do |name, msg| %>
+		<%= content_tag :div, msg, :id => "flash_#{name}" %>
+		<%end%>
+		<div class="row">
+			<div class="span15">
+			</div>
+		</div>
+	</div>
+</div>
+
 <%= yield %>
 
 <%= render :partial => "partials/footer" %>

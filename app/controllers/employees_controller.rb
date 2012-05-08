@@ -3,8 +3,12 @@ class EmployeesController < ApplicationController
   before_filter :check_login
 
   def index
-    @employees = Employee.active.alphabetical.paginate(:page => params[:page]).per_page(10)
-    @past_employees = Employee.inactive.alphabetical.paginate(:page => params[:page]).per_page(10)
+    if current_user.role == 'admin'
+      @employees = Employee.active.alphabetical.paginate(:page => params[:page]).per_page(10)
+      @past_employees = Employee.inactive.alphabetical.paginate(:page => params[:inactive_page]).per_page(10)
+    elsif current_user.role == 'manager'
+      @employees = current_user.employee.current_assignment.store.assignments.current.by_employee.paginate(:page => params[:page]).per_page(10)
+    end
   end
 
   def show
@@ -13,7 +17,9 @@ class EmployeesController < ApplicationController
     # get the assignment history for this employee
     @assignments = @employee.assignments.chronological.paginate(:page => params[:page]).per_page(10)
     # get upcoming shifts for this employee (later)
-    
+    @shifts = Shift.for_employee(@employee.id).for_next_days(10).chronological
+    @shifts_past = Shift.past.for_employee(@employee.id).chronological
+    authorize! :show, @employee
   end
 
   def new
@@ -22,6 +28,7 @@ class EmployeesController < ApplicationController
 
   def edit
     @employee = Employee.find(params[:id])
+    authorize! :update, @employee
   end
 
   def create
@@ -38,6 +45,7 @@ class EmployeesController < ApplicationController
 
   def update
     @employee = Employee.find(params[:id])
+    authorize! :update, @employee
     if @employee.update_attributes(params[:employee])
       flash[:notice] = "Successfully updated #{@employee.proper_name}."
       redirect_to @employee

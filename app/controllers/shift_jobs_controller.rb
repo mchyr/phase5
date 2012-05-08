@@ -1,6 +1,7 @@
 class ShiftJobsController < ApplicationController
 
   before_filter :check_login
+  authorize_resource
   
   # GET /shift_jobs
   # GET /shift_jobs.json

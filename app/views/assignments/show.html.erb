@@ -6,12 +6,12 @@
 
 <p>
 	<b>Store:&nbsp;&nbsp;</b>
-	<%= @assignment.store.name %>
+	<%= link_to @assignment.store.name, store_path(@assignment.store) %>
 </p>
 
 <p>
 	<b>Employee:&nbsp;&nbsp;</b>
-	<%= @assignment.employee.name %>
+	<%= link_to @assignment.employee.name, employee_path(@assignment.employee) %>
 </p>
 
 <p>
@@ -21,15 +21,11 @@
  
  <p>
 	<b>End Date:&nbsp;&nbsp;</b>
-	<% if @assignment.end_date != nil %>
-		<%= @assignment.end_date.strftime("%m/%d/%y") %>
-	<% else %>
-		<%= "The assignment has not ended" %>
-	<% end %>
+	<% "#{(@assignment.end_date.nil?)? "None" : "#{(@assignment.end_date).strftime("%m/%d/%y")}"}" %>
 </p>
 
 <%= link_to 'Edit', edit_assignment_path(@assignment) %> |
-<%= link_to 'Delete', @assignment, :confirm => 'Are you sure?', :method => :delete %> |
-<%= link_to 'Back', assignments_path %>
+<%= link_to 'Back', assignments_path %> |
+<%= link_to 'Delete', @assignment, :confirm => 'Are you sure?', :method => :delete %>
 
 </div>

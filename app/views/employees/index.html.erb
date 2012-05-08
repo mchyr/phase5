@@ -13,25 +13,26 @@
     <th>Active</th>
     <th>&nbsp;</th>
     
-<% @employees.each do |employee| %>
+<% @employees.each do |assignment| %>
     <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
-    <td><%= link_to employee.name, employee_path(employee) %></td>
-    <td><%= number_to_phone employee.phone %></td>
-    <td><%= link_to employee.current_assignment.store.name, store_path(employee.current_assignment.store) unless employee.current_assignment.nil? %></td>
-    <td><%= employee.role.capitalize %></td>
-    <td><%= "#{(employee.active)? "Yes" : "No"}" %></td>
-    <td><%= link_to 'Edit', edit_employee_path(employee), :class => 'btn' %></td>
+    <td><%= link_to "#{assignment.employee.last_name}, #{assignment.employee.first_name}", employee_path(assignment.employee) %></td>
+    <td><%= number_to_phone assignment.employee.phone %></td>
+    <td><%= link_to assignment.employee.current_assignment.store.name, store_path(assignment.employee.current_assignment.store) unless assignment.employee.current_assignment.nil? %></td>
+    <td><%= assignment.employee.role.capitalize %></td>
+    <% if can? :update, assignment %><td><%= link_to 'Edit', edit_employee_path(assignment.employee), :class => 'btn' %></td> <% end %>
 
   </tr>
 <% end %>
 </table>
-<span class="smtext">
-	<%= will_paginate @employees, :previous_label => "Previous&nbsp;", :next_label => "Next&nbsp;" %>
-</span>
 
 <p><strong><%= link_to 'New Employee', new_employee_path, :class => 'btn' %></strong></p>
 
+<span class="smtext">
+	<%= will_paginate @employees, :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+</span>
+</br>
 
+<% unless @past_employees.nil? %>
 <h1>Past Employees</h1>
 
 <table class="datagrid">
@@ -44,15 +45,18 @@
     
 <% @past_employees.each do |employee| %>
     <tr class="<%= cycle('dg_list_line_odd', 'dg_list_line_even') %>">
-    <td><%= link_to employee.name, employee_path(employee) %></td>
-    <td><%= link_to 'Edit', edit_employee_path(employee), :class => 'btn' %></td>
+    <td><%= link_to "#{employee.last_name}, #{employee.first_name}", employee_path(employee) %></td>
+    <% if can? :update, employee %><td><%= link_to 'Edit', edit_employee_path(employee), :class => 'btn' %></td><% end %>.
 
   </tr>
 <% end %>
 </table>
 <!-- Add the pagination using will_paginate gem -->
 <span class="smtext">
-  <%= will_paginate @employees, :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next" %>
+  <%= will_paginate @past_employees, :previous_label => "Previous&nbsp;", :next_label => "&nbsp;Next", :param_name => "inactive_page" %>
 </span>
+<% else %>
+
+<% end %>
 
 </div>

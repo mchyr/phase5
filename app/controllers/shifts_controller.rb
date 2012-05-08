@@ -1,16 +1,24 @@
 class ShiftsController < ApplicationController
 
   before_filter :check_login
+
   # GET /shifts
   # GET /shifts.json
   def index
-    @shifts = Shift.paginate(:page => params[:page]).per_page(10)
+    @employee = current_user.employee
+    if current_user.role == 'admin'
+      @shifts = Shift.completed.chronological.by_employee.paginate(:page => params[:page]).per_page(10)
+      @incomplete_shifts = Shift.past.incomplete.chronological.paginate(:page => params[:incomplete_shifts]).per_page(10)
+    elsif current_user.role == 'manager'
+      @shifts = Shift.for_store(@employee.current_assignment.store).completed.chronological.by_employee.paginate(:page => params[:page]).per_page(10)
+      @incomplete_shifts = Shift.for_store(@employee.current_assignment.store).past.incomplete.chronological.paginate(:page => params[:incomplete_shifts]).per_page(10)
   end
 
   # GET /shifts/1
   # GET /shifts/1.json
   def show
     @shift = Shift.find(params[:id])
+    authorize! :show, @shift
   end
 
   # GET /shifts/new
@@ -24,6 +32,7 @@ class ShiftsController < ApplicationController
       @shift = Shift.new
     end
     @shift.shift_jobs.build
+    authorize! :create, @shift
   end
 
   # GET /shifts/1/edit
@@ -37,7 +46,7 @@ class ShiftsController < ApplicationController
   # POST /shifts.json
   def create
     @shift = Shift.new(params[:shift])
-
+    authorize! :create, @shift
     respond_to do |format|
       if @shift.save
         format.html { redirect_to @shift, notice: 'Shift was successfully created.' }
@@ -54,6 +63,7 @@ class ShiftsController < ApplicationController
   def update
     @shift = Shift.find(params[:id])
     @jobs = Job.active.all
+    authorize! :update, @shift
 
     respond_to do |format|
       if @shift.update_attributes(params[:shift])
@@ -73,8 +83,12 @@ class ShiftsController < ApplicationController
     @shift.destroy
 
     respond_to do |format|
-      format.html { redirect_to shifts_url }
-      format.json { head :no_content }
+      if current_user.role == 'manager'
+        format.html {redirect_to manager_dash_path}
+      else
+        format.html {redirect_to shifts_url}
+      end
+      format.json {head :no_content}
     end
   end
 end
