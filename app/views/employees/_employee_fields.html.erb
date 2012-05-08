@@ -1,0 +1,35 @@
+<div class="field">
+  <%= f.label :first_name %>
+  <%= f.text_field :first_name %>
+</div>
+
+<div class="field">
+  <%= f.label :last_name %>
+  <%= f.text_field :last_name %>
+</div>
+
+<div class="field">
+  <%= f.label :ssn %>
+  <%= f.text_field :ssn %>
+</div>
+
+<div class="field">
+  <%= f.label :date_of_birth %><br />
+  <%= f.date_select :date_of_birth, :as => :date, :start_year => Date.today.year-90, :end_year => Date.today.year - 13, :order => [:month, :day, :year] %>
+</div>
+
+<div class="field"><br />
+  <%= f.label :phone %>
+  <%= f.text_field :phone %>
+</div>
+
+<div class="field"><br />
+  <%= f.label :role %>
+  <%= f.select(:role, Employee::ROLES_LIST, :prompt => "Select...") %>
+</div>
+
+
+<div class="field">
+  <%= f.label :active %><br />
+  <%= f.check_box :active %>
+</div>

@@ -1,0 +1,43 @@
+<div id="container">
+	<br>
+	<table>
+		<h1><font color="red">You have incompleted shifts to finish!</font><h1>
+			<thead>
+
+				<th>Incomplete Shifts</th>
+			</thead>
+
+			<thead>
+				<th>Name</th>
+				<th>Date</th>
+				<th>Start Time</th>
+				<th></th>
+			</thead>
+			<% if @incomplete_shifts.size > 0 %>
+			<% @incomplete_shifts.each do |shift| %>
+			<% if shift.assignment.employee.name != @employee.name %>
+			<tr>
+				<td><%= link_to shift.assignment.employee.name, employee_path(shift.assignment.employee) %></td>
+				<td><%= shift.date.strftime("%m/%d/%Y") %></td>
+				<td><%= shift.start_time.strftime("%I:%M%p") %></td>
+				<td><%= link_to 'Edit', edit_shift_path(shift), :class => 'btn' %></td>
+				<td><%= link_to 'Delete', shift, confirm: 'Are you sure?', method: :delete, :class => 'btn danger' %></td>
+			</tr>
+			<% end %>
+			<% end %>
+			<% else %>
+			<tr>
+				<td>None</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<% end %>
+
+		</table>
+
+		<div id="page_nav">
+			<%= will_paginate @incomplete_shifts, :previous_level => "Previous&nbsp;", :next_label => "&nbsp;Next", :param_name => 'incomplete_shifts' %>
+		</div>
+		<br/>
+		<br/>
